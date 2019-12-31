@@ -8,7 +8,8 @@
   "scripts": {
     "test": "live-server --open=./SpecRunner.html --port=8081",
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
-    "transpile-react": "babel . --watch --out-dir compiled --presets=react --ignore=node_modules,compiled --source-maps inline"
+    "transpile-react": "babel . --watch --out-dir compiled --presets=react --ignore=node_modules,compiled --source-maps inline",
+    "start": "babel . --watch --out-dir compiled --presets=react --ignore=node_modules,compiled --source-maps inline && npm install -g live-server"
   },
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.2",
