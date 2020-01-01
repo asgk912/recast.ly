@@ -35,6 +35,11 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+
+    this.liveSearchOnChange('Javascript');
+
+    /* old live-search methods: it did not use event handler and was not passed down to <Search />
+
     // intial option for youtub serach
     var options = {key: YOUTUBE_API_KEY, query: 'react', max: 5};
 
@@ -61,34 +66,43 @@ class App extends React.Component {
         bindedSearchYouTube(options, bindedCBSetState);
       }
     }, 500);
-
-    /* test on fetching input data with set interval
-    setInterval(() => {
-      var searchWord = document.getElementsByClassName("form-control")[0].value;
-      console.log(bindedSearchYouTube);
-    }, 1000);
     */
   }
 
-  // playOnClick(event) {
-  //   if (event.target.className === 'video-list-entry-title') {
-
-  //     for (var i = 0; i < this.state.videoList.length; i++) {
-
-  //       if (event.target.innerText === this.state.videoList[i].snippet.title) {
-  //         this.setState({
-  //           videoPlayer: this.state.videoList[i]
-  //         });
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }
-
+  // even handler for clicking title of video on list
   playOnClick(video) {
     this.setState({
       videoPlayer: video
     });
+  }
+
+  /* old click event handler: event was handeled within <App /> not within <VideoListEntry />
+  playOnClick(event) {
+    if (event.target.className === 'video-list-entry-title') {
+
+      for (var i = 0; i < this.state.videoList.length; i++) {
+
+        if (event.target.innerText === this.state.videoList[i].snippet.title) {
+          this.setState({
+            videoPlayer: this.state.videoList[i]
+          });
+          break;
+        }
+      }
+    }
+  }
+  */
+
+  // even handler for typing words in search engine
+  liveSearchOnChange(query) {
+    var options = {'key': YOUTUBE_API_KEY, 'query': query, 'max': 5};
+
+    this.props.searchYouTube(options, (data) =>
+      this.setState({
+        videoList: data,
+        videoPlayer: data[0]
+      })
+    );
   }
 
   render() {
@@ -96,7 +110,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+            <Search liveSearchOnChange={this.liveSearchOnChange.bind(this)}/>
           </div>
         </nav>
         <div className="row">
