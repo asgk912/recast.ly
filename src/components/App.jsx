@@ -70,19 +70,25 @@ class App extends React.Component {
     */
   }
 
-  playOnClick(event) {
-    if (event.target.className === 'video-list-entry-title') {
+  // playOnClick(event) {
+  //   if (event.target.className === 'video-list-entry-title') {
 
-      for (var i = 0; i < this.state.videoList.length; i++) {
+  //     for (var i = 0; i < this.state.videoList.length; i++) {
 
-        if (event.target.innerText === this.state.videoList[i].snippet.title) {
-          this.setState({
-            videoPlayer: this.state.videoList[i]
-          });
-          break;
-        }
-      }
-    }
+  //       if (event.target.innerText === this.state.videoList[i].snippet.title) {
+  //         this.setState({
+  //           videoPlayer: this.state.videoList[i]
+  //         });
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
+
+  playOnClick(video) {
+    this.setState({
+      videoPlayer: video
+    });
   }
 
   render() {
@@ -97,8 +103,9 @@ class App extends React.Component {
           <div className="col-md-7">
             <VideoPlayer video={this.state.videoPlayer}/>
           </div>
-          <div className="col-md-5" onClick={this.playOnClick.bind(this)}>
-            <VideoList videos={this.state.videoList}/>
+          {/* <div className="col-md-5" onClick={this.playOnClick.bind(this)} > */}
+          <div className="col-md-5">
+            <VideoList videos={this.state.videoList} playOnClick={this.playOnClick.bind(this)}/>
           </div>
         </div>
       </div>
